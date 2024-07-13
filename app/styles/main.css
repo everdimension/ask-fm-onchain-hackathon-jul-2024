@@ -4,5 +4,5 @@
 @import "open-props/gradients";
 
 body {
-  /* background: red; */
+  min-width: 480px;
 }

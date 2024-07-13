@@ -3,6 +3,7 @@ export function PageLayout(props: React.PropsWithChildren) {
     <div
       style={{
         maxWidth: 800,
+        paddingInline: 16,
         marginInline: "auto",
       }}
     >
