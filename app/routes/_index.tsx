@@ -9,12 +9,14 @@ import { BrowserProvider } from "ethers";
 import { useId } from "react";
 import { Spacer } from "structure-kit";
 import invariant from "tiny-invariant";
-import { z } from "zod";
+import { createQuestion, SubmitQuestionSchema } from "~/apis/ask-nft-api";
+import { getWalletsMeta } from "~/apis/zerion-api";
 import { ConnectButton } from "~/components/ConnectButton";
 import {
   useAppkitModal,
   useModalState,
 } from "~/components/ConnectButton/ConnectButton";
+import { Navbar } from "~/components/Navbar";
 import { PageLayout } from "~/components/PageLayout";
 
 export const meta: MetaFunction = () => {
@@ -33,29 +35,37 @@ export const links: LinksFunction = () => {
   ];
 };
 
-const SubmitQuestionSchema = z.object({
-  receiver: z.string(),
-  question: z.string(),
-  signature: z.string(),
-  address: z.string(),
-});
+async function resolveAddress(value: string) {
+  const response = await getWalletsMeta({ identifiers: [value] });
+  const address = response?.data?.[0]?.address;
+  if (!address) {
+    throw new Error(`Invalid identity: ${value}`);
+  }
+  return address;
+}
 
 export async function action({ request }: ActionFunctionArgs) {
-  console.log("action!");
-  const data = await request.formData();
-  const receiver = data.get("receiver");
-  const question = data.get("question");
-  const signature = data.get("signature");
-  const address = data.get("address");
+  const fd = await request.formData();
+  const receiver = fd.get("receiver");
+  const question = fd.get("question");
+  const signature = fd.get("signature");
+  const address = fd.get("address");
 
-  const x = SubmitQuestionSchema.parse({
+  const data = SubmitQuestionSchema.parse({
     receiver,
     question,
     signature,
     address,
+    answer: null,
   });
-  console.log({ x });
-  return redirect(`/questions?address=${address}`);
+  await resolveAddress(data.receiver);
+  const resolvedAddress = await resolveAddress(data.address);
+  await createQuestion({
+    ...data,
+    address: await resolveAddress(data.address),
+    receiver: await resolveAddress(data.receiver),
+  });
+  return redirect(`/my-questions?address=${resolvedAddress}`);
 }
 
 function FormField({
@@ -69,7 +79,7 @@ function FormField({
     <div
       style={{
         display: "grid",
-        gridTemplateColumns: "1fr 1fr",
+        gridTemplateColumns: "0.8fr 1fr",
         gap: 8,
         alignItems: "baseline",
       }}
@@ -93,7 +103,7 @@ function FormFieldTextArea({
     <div
       style={{
         display: "grid",
-        gridTemplateColumns: "1fr 1fr",
+        gridTemplateColumns: "0.8fr 1fr",
         gap: 8,
         alignItems: "baseline",
       }}
@@ -132,6 +142,7 @@ export default function Index() {
   const INTENT_SUBMIT = "SUBMIT";
   return (
     <PageLayout>
+      <Navbar />
       <div>
         <h1>Feel Free to Ask</h1>
         <Spacer height={64} />
@@ -141,11 +152,9 @@ export default function Index() {
           style={{ display: "grid", gap: 20 }}
           onSubmit={(event) => {
             event.preventDefault();
-            console.log("form submission");
             const form = event.currentTarget;
             const intent = new FormData(form).get("intent");
             if (intent === INTENT_SUBMIT) {
-              console.log("submitting to serever");
               form.submit();
             }
           }}
@@ -155,6 +164,7 @@ export default function Index() {
             name="receiver"
             placeholder="someone.eth"
             required={true}
+            pattern="(0x[a-fA-F0-9]{40})|((\w|\.)+\.(eth|lens))"
             onChange={() => {
               signQuestionMutation.reset();
             }}
@@ -162,7 +172,7 @@ export default function Index() {
           <FormFieldTextArea
             label="Your Question"
             name="question"
-            placeholder="when are you selling?"
+            placeholder="when are you dumping?"
             required={true}
             onChange={() => {
               signQuestionMutation.reset();

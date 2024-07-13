@@ -1,12 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 import { createWeb3Modal, defaultConfig, Web3Modal } from "@web3modal/ethers";
 import { Eip1193Provider } from "ethers";
-import { useEffect, useState, useSyncExternalStore } from "react";
+import { useEffect, useState } from "react";
 import invariant from "tiny-invariant";
-// import invariant from "tiny-invariant";
-
-// const WALLETCONNECT_PROJECT_ID = process.env.WALLETCONNECT_PROJECT_ID;
-// invariant(WALLETCONNECT_PROJECT_ID, "WALLETCONNECT_PROJECT_ID is required");
 
 function createModal(projectId: string) {
   // 2. Set chains

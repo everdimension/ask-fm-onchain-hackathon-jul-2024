@@ -3,6 +3,15 @@
 @import "open-props/buttons";
 @import "open-props/gradients";
 
+:root {
+  --brand-bg-gradient: linear-gradient(
+    to bottom,
+    var(--purple-3),
+    var(--violet-3),
+    var(--indigo-3),
+    var(--cyan-3)
+  );
+}
 body {
   min-width: 480px;
 }
