@@ -14,9 +14,32 @@
 }
 
 body {
-  min-width: 480px;
+  min-width: 375px;
 }
 
 h1 {
   line-height: 1;
+}
+
+.field-stack-columns {
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 600px) {
+  .field-stack-columns {
+    grid-template-columns: 0.8fr 1fr;
+  }
+  .field-stack-columns label {
+    justify-self: end;
+  }
+}
+
+.gallery-columns {
+  grid-template-columns: 1fr 1fr;
+}
+
+@media (min-width: 600px) {
+  .gallery-columns {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
 }

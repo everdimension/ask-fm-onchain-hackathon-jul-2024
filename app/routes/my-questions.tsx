@@ -54,13 +54,7 @@ export default function Questions() {
       {!address ? (
         <ConnectButton />
       ) : data.length ? (
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "1fr 1fr 1fr",
-            gap: 20,
-          }}
-        >
+        <div className="gallery-columns" style={{ display: "grid", gap: 20 }}>
           {data.map((entry) => (
             <div
               key={entry.id}

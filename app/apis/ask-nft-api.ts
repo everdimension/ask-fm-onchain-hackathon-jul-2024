@@ -44,10 +44,7 @@ export async function getQuestions({
   url.searchParams.set("signature", signature);
   const response = await fetch(url);
   const results: DBQuestion[] = await response.json();
-  return results.filter((entry) => {
-    // filter out broken item on backend
-    return entry.tokenId !== "4";
-  });
+  return results;
 }
 
 export async function getQuestionsForMe({
@@ -61,10 +58,7 @@ export async function getQuestionsForMe({
 
   const response = await fetch(url);
   const results: DBQuestion[] = await response.json();
-  return results.filter((entry) => {
-    // filter out broken item on backend
-    return entry.tokenId !== "4";
-  });
+  return results;
 }
 
 export async function getQuestionById({ id }: { id: string }) {

@@ -77,16 +77,14 @@ function FormField({
   const id = useId();
   return (
     <div
+      className="field-stack-columns"
       style={{
         display: "grid",
-        gridTemplateColumns: "0.8fr 1fr",
         gap: 8,
         alignItems: "baseline",
       }}
     >
-      <label htmlFor={id} style={{ justifySelf: "end" }}>
-        {label}
-      </label>
+      <label htmlFor={id}>{label}</label>
       <input id={id} {...inputProps} />
     </div>
   );
@@ -101,16 +99,14 @@ function FormFieldTextArea({
   const id = useId();
   return (
     <div
+      className="field-stack-columns"
       style={{
         display: "grid",
-        gridTemplateColumns: "0.8fr 1fr",
         gap: 8,
         alignItems: "baseline",
       }}
     >
-      <label htmlFor={id} style={{ justifySelf: "end" }}>
-        {label}
-      </label>
+      <label htmlFor={id}>{label}</label>
       <textarea id={id} {...inputProps} />
     </div>
   );
