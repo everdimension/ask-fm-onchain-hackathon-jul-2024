@@ -21,8 +21,8 @@ import { PageLayout } from "~/components/PageLayout";
 
 export const meta: MetaFunction = () => {
   return [
-    { title: "New Remix App" },
-    { name: "description", content: "Welcome to Remix!" },
+    { title: "Ask NFT" },
+    { name: "description", content: "Ask questions to crypto holders" },
   ];
 };
 
@@ -143,6 +143,7 @@ export default function Index() {
   return (
     <PageLayout>
       <Navbar />
+      <Spacer height={24} />
       <div>
         <h1>Feel Free to Ask</h1>
         <Spacer height={64} />

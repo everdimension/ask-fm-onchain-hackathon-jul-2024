@@ -12,6 +12,11 @@
     var(--cyan-3)
   );
 }
+
 body {
   min-width: 480px;
+}
+
+h1 {
+  line-height: 1;
 }

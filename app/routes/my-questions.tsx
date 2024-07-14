@@ -47,6 +47,7 @@ export default function Questions() {
   return (
     <PageLayout>
       <Navbar />
+      <Spacer height={24} />
       <h1>Questions I asked</h1>
       <Spacer height={64} />
 

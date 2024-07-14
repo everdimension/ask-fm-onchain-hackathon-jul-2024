@@ -43,6 +43,7 @@ export default function QuestionsForMe() {
   return (
     <PageLayout>
       <Navbar />
+      <Spacer height={24} />
       <h1>Questions for me</h1>
       <Spacer height={64} />
 

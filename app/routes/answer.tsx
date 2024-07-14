@@ -48,6 +48,7 @@ export default function Answer() {
   return (
     <PageLayout>
       <Navbar />
+      <Spacer height={24} />
       <h1>Answer</h1>
       <Spacer height={64} />
       <form method="post">
