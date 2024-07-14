@@ -47,7 +47,7 @@ export default function Questions() {
   return (
     <PageLayout>
       <Navbar />
-      <h1>Questions</h1>
+      <h1>Questions I asked</h1>
       <Spacer height={64} />
 
       {!address ? (
@@ -74,8 +74,13 @@ export default function Questions() {
                 style={{
                   aspectRatio: "1.5 / 1",
                   background: "var(--brand-bg-gradient)",
-                  backgroundImage: `url(${"https://magenta-imperial-booby-654.mypinata.cloud/ipfs/QmNSJtpv8W85T3ZSPtmaZvSS3bK8jp7Pus36qT8beEE42e"})`,
-                  backgroundSize: "cover",
+                  backgroundImage: entry.answer
+                    ? `url("https://expression-statement.fly.dev/ask-nft?text=${encodeURIComponent(
+                        entry.question
+                      )}")`
+                    : 'url("https://magenta-imperial-booby-654.mypinata.cloud/ipfs/QmNSJtpv8W85T3ZSPtmaZvSS3bK8jp7Pus36qT8beEE42e")',
+                  backgroundSize: entry.answer ? "contain" : "cover",
+                  backgroundPosition: "center",
                 }}
               ></div>
               <div style={{ padding: 12, paddingBottom: 16 }}>
