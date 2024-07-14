@@ -15,6 +15,7 @@ import {
 } from "~/components/ConnectButton/ConnectButton";
 import { Navbar } from "~/components/Navbar";
 import { PageLayout } from "~/components/PageLayout";
+import { getNftUrl } from "~/shared/getNftUrl";
 import { truncateAddress } from "~/shared/truncateAddress";
 
 export async function loader({ request }: LoaderFunctionArgs) {
@@ -27,10 +28,9 @@ export async function loader({ request }: LoaderFunctionArgs) {
   return json(questions);
 }
 
-export default function Questions() {
+export default function QuestionsForMe() {
   const [params] = useSearchParams();
   const address = params.get("address");
-  // invariant(address, "address get-param is required");
   const { data: modal } = useAppkitModal();
   const { address: connectedAddress } = useModalState(modal);
   const data = useLoaderData<typeof loader>();
@@ -70,6 +70,8 @@ export default function Questions() {
                 style={{
                   aspectRatio: "1.5 / 1",
                   background: "var(--brand-bg-gradient)",
+                  backgroundImage: `url(${"https://magenta-imperial-booby-654.mypinata.cloud/ipfs/QmNSJtpv8W85T3ZSPtmaZvSS3bK8jp7Pus36qT8beEE42e"})`,
+                  backgroundSize: "cover",
                 }}
               ></div>
               <div style={{ padding: 12, paddingBottom: 16 }}>
@@ -89,6 +91,15 @@ export default function Questions() {
                   ) : (
                     <Link to={`/answer?question=${entry.id}`}>Answer</Link>
                   )}
+                  {entry.tokenId ? (
+                    <a
+                      href={getNftUrl(entry.tokenId)}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      NFT
+                    </a>
+                  ) : null}
                 </VStack>
               </div>
             </div>

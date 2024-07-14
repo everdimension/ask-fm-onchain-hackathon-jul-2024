@@ -5,7 +5,7 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
-  useLoaderData,
+  useRouteLoaderData,
 } from "@remix-run/react";
 import stylesHref from "./styles/main.css?url";
 import { LinksFunction } from "@remix-run/node";
@@ -44,7 +44,7 @@ function Providers({ children }: { children: React.ReactNode }) {
 }
 
 export function Layout({ children }: { children: React.ReactNode }) {
-  const data = useLoaderData<typeof loader>();
+  const data = useRouteLoaderData<typeof loader>("root");
   return (
     <html lang="en">
       <head>
@@ -57,7 +57,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         {children}
         <script
           dangerouslySetInnerHTML={{
-            __html: `window.ENV = ${JSON.stringify(data.ENV)}`,
+            __html: `window.ENV = ${JSON.stringify(data?.ENV || {})}`,
           }}
         />
         <ScrollRestoration />

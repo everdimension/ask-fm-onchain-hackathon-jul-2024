@@ -104,6 +104,7 @@ export function ConnectButton() {
   return (
     <div>
       <button
+        type="button"
         onClick={() => {
           modal?.open();
         }}

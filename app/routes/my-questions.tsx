@@ -90,6 +90,15 @@ export default function Questions() {
                       {entry.answer}
                     </div>
                   ) : null}
+                  {entry.tokenId ? (
+                    <a
+                      href={`/answer?question=${entry.id}`}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      NFT
+                    </a>
+                  ) : null}
                 </VStack>
               </div>
             </div>

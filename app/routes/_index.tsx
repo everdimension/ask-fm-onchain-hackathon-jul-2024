@@ -49,20 +49,20 @@ export async function action({ request }: ActionFunctionArgs) {
   const receiver = fd.get("receiver");
   const question = fd.get("question");
   const signature = fd.get("signature");
-  const address = fd.get("address");
+  const sender = fd.get("sender");
 
   const data = SubmitQuestionSchema.parse({
     receiver,
     question,
     signature,
-    address,
+    sender,
     answer: null,
   });
   await resolveAddress(data.receiver);
-  const resolvedAddress = await resolveAddress(data.address);
+  const resolvedAddress = await resolveAddress(data.sender);
   await createQuestion({
     ...data,
-    address: await resolveAddress(data.address),
+    sender: await resolveAddress(data.sender),
     receiver: await resolveAddress(data.receiver),
   });
   return redirect(`/my-questions?address=${resolvedAddress}`);
@@ -201,7 +201,7 @@ export default function Index() {
               <>
                 <button>submit</button>
                 <input type="hidden" name="signature" value={signature} />
-                <input type="hidden" name="address" value={address} />
+                <input type="hidden" name="sender" value={address} />
                 <input type="hidden" name="intent" value={INTENT_SUBMIT} />
               </>
             )}

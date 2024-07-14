@@ -4,6 +4,7 @@ import { Spacer, VStack } from "structure-kit";
 import invariant from "tiny-invariant";
 import { createAnswer, getQuestionById } from "~/apis/ask-nft-api";
 import {
+  ConnectButton,
   useAppkitModal,
   useModalState,
 } from "~/components/ConnectButton/ConnectButton";
@@ -66,14 +67,20 @@ export default function Answer() {
               required={true}
             />
           </VStack>
-          <div>
-            <button disabled={addressMismatch}>Submit</button>
-            {addressMismatch ? (
-              <div style={{ color: "var(--red-4)" }}>
-                Connected address is not who the question is for
-              </div>
-            ) : null}
-          </div>
+          {!address ? (
+            <div>
+              <ConnectButton />
+            </div>
+          ) : (
+            <div>
+              <button disabled={addressMismatch}>Submit</button>
+              {addressMismatch ? (
+                <div style={{ color: "var(--red-4)" }}>
+                  Connected address is not who the question is for
+                </div>
+              ) : null}
+            </div>
+          )}
         </VStack>
       </form>
     </PageLayout>
