@@ -34,17 +34,20 @@ export async function createQuestion(data: Question) {
 
 export async function getQuestions({
   address,
+  signature,
 }: {
   address: string;
   signature: string;
 }) {
-  const results: DBQuestion[] = [];
-  for (const value of db.values()) {
-    if (value.sender === address) {
-      results.push(value);
-    }
-  }
-  return results;
+  const url = new URL("/api/asked-questions", apiUrl);
+  url.searchParams.set("sender", address);
+  url.searchParams.set("signature", signature);
+  const response = await fetch(url);
+  const results: DBQuestion[] = await response.json();
+  return results.filter((entry) => {
+    // filter out broken item on backend
+    return entry.tokenId !== "4";
+  });
 }
 
 export async function getQuestionsForMe({

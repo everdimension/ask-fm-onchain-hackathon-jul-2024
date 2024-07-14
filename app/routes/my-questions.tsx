@@ -14,6 +14,7 @@ import {
 } from "~/components/ConnectButton/ConnectButton";
 import { Navbar } from "~/components/Navbar";
 import { PageLayout } from "~/components/PageLayout";
+import { getNftUrl } from "~/shared/getNftUrl";
 import { truncateAddress } from "~/shared/truncateAddress";
 
 export async function loader({ request }: LoaderFunctionArgs) {
@@ -73,6 +74,8 @@ export default function Questions() {
                 style={{
                   aspectRatio: "1.5 / 1",
                   background: "var(--brand-bg-gradient)",
+                  backgroundImage: `url(${"https://magenta-imperial-booby-654.mypinata.cloud/ipfs/QmNSJtpv8W85T3ZSPtmaZvSS3bK8jp7Pus36qT8beEE42e"})`,
+                  backgroundSize: "cover",
                 }}
               ></div>
               <div style={{ padding: 12, paddingBottom: 16 }}>
@@ -92,7 +95,7 @@ export default function Questions() {
                   ) : null}
                   {entry.tokenId ? (
                     <a
-                      href={`/answer?question=${entry.id}`}
+                      href={getNftUrl(entry.tokenId)}
                       target="_blank"
                       rel="noreferrer"
                     >
